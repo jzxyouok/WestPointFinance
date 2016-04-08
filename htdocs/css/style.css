@@ -1695,7 +1695,7 @@ img[alt="logo"] {
 }
 
 .index-page .product-list li .product-title {
-    background: #c9e473 url(../images/pro-bg.png) no-repeat 100% 50%;
+    background: #c9e473 url(../images/decorate-0.png) no-repeat 100% 50%;
     background-size: auto 0.6rem;
 }
 
@@ -1707,7 +1707,7 @@ img[alt="logo"] {
 .index-page .product-meta .product-meta-item {
     padding-left: 0.3rem;
     margin-top: 0.1rem;
-    background: url(../images/ck.png) no-repeat 0 2px;
+    background: url(../images/icon-2.png) no-repeat 0 2px;
     background-size: 0.24rem;
 }
 
@@ -1758,7 +1758,7 @@ img[alt="logo"] {
 
 .index-page .block06 .media-box {
     position: relative;
-    background: url(../images/7-pic.png) no-repeat 0 100%;
+    background: url(../images/adviser.png) no-repeat 0 100%;
     background-size: 3.16rem;
     min-height: 3.16rem;
 }
@@ -2010,7 +2010,7 @@ img[alt="logo"] {
     width: 81px;
     height: 81px;
     margin: 0 auto;
-    background-image: url(../images/2-icon.png);
+    background-image: url(../images/icon-1.png);
     background-size: 81px auto;
     -moz-transform: scale(0.7);
     -webkit-transform: scale(0.7);
@@ -2020,7 +2020,7 @@ img[alt="logo"] {
 }
 
 .index-page .des-list li.current .icon-sprite {
-    background-image: url(../images/2-now-icon.png);
+    background-image: url(../images/icon-1-sel.png);
 }
 
 li.current .icon-icon1,
