@@ -10,42 +10,53 @@ define("JSAPI_TYPE", 2);
 define("TIKET_TYPE", 3);
 define("DEBUG", false);
 define("PRE_EXPIRED", 60);
-class JsSdk
+
+class WxSdk
 {
-	public function getJsApiSignPackage()
-	{
-		$package = null;
+    # 获取 JsApi 的签名包，用于网页开发时对微信的Js接口进行配置
+    # $url               - 要配置的页面的 Url
+    # $createJsApiToken  - 使用一个新创建的凭据
+    public function getJsApiSignPackage($url, $createJsApiToken = false)
+    {
+        $package = null;
 
-		$jsapi_token = $this->getJsApiToken();
+        $jsapi_token = null;
 
-		if ($jsapi_token)
-		{
-			// 注意 URL 一定要动态获取，不能 hardcode.
-			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-			$url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        if ($createJsApiToken)
+            $jsapi_token = $this->createJsApiToken();
+        else
+            $jsapi_token = $this->getJsApiToken();
 
-			$timestamp = time();
-			$nonceStr = $this->createNonceStr();
+        if ($jsapi_token)
+        {
+            $timestamp = time();
+            $nonceStr = $this->createNonceStr();
+            
+            # 要按照 key 值 ASCII 码升序排序
+            $string = "jsapi_ticket=$jsapi_token&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+            
+            $signature = sha1($string);
 
-			// 这里参数的顺序要按照 key 值 ASCII 码升序排序
-			$string = "jsapi_ticket=$jsapi_token&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+            # 生成签名包
+            # 微信分享时跳转的 URL 目前就用当前页面
+            # 微信分享时的标题和描述目前写死
+            # 分享时的Logo写死
+            $package = array(			  
+                "appId"     => APP_ID,
+                "timestamp" => $timestamp,
+                "nonceStr"  => $nonceStr,
+                "signature" => $signature,            
+                "url"       => $url,
+                "title"     => "西点金融 - 优质香港保险",
+                "desc"      => "西点金融网为广大客户提供更为优质的香港保险产品，香港保险费率更低，保障更全，保额更高，投资回报高。立即预约，即可获得香港保险顾问一对一为您定制的投保计划书",
+                "logo"      => "http://www.westpointfinance/images/shareLogo.jpg",		
+            );
+        }
+        
+        return $package;
+    }
 
-			$signature = sha1($string);
-
-			$package = array(
-			  "appId"     => APP_ID,
-			  "timestamp" => $timestamp,
-			  "nonceStr"  => $nonceStr,
-			  "url"       => $url,
-			  "signature" => $signature,
-              "debug"     => DEBUG
-			);
-		}
-
-		return $package;
-	}
-
-	// 获取 JsApi 凭据
+    # 获取 JsApi 凭据
 	private function getJsApiToken()
 	{
 		$jsapi_token = null;
@@ -69,7 +80,7 @@ class JsSdk
 		return $jsapi_token;
 	}
 
-	// 创建 JsApi 凭据
+    # 创建 JsApi 凭据
 	private function createJsApiToken()
 	{
 		$jsapi_token = null;
@@ -81,9 +92,9 @@ class JsSdk
 		if ($rsp)
 		{
 			$jsapi_token = $rsp->ticket;
-
-            # 比微信的过期时间提前60秒
-			$expiredTime = $now + $rsp->expires_in - PRE_EXPIRED;
+            
+            # 比微信的过期时间提前一些
+			$expiredTime = $now + $rsp->expires_in;
 
 			$this->setAuthentication(JSAPI_TYPE, $jsapi_token, $expiredTime);
 		}
@@ -91,7 +102,7 @@ class JsSdk
 		return $jsapi_token;
 	}
 
-	// 调用微信接口获取 JsApi 凭据
+    # 调用微信接口获取 JsApi 凭据
 	private function wxGetJsApiToken()
 	{
 		$response = null;
@@ -111,6 +122,7 @@ class JsSdk
 					case 0:
 						$response = $rsp;
 						break;
+                    # 若微信接口凭据无效或者过期，则请求新的微信凭据，然后再用新的微信凭据请求JsApi凭据
 					case 40001:
 					case 40014:
 					case 42001:
@@ -125,7 +137,7 @@ class JsSdk
 		return $response;
 	}
 
-	// 创建一个新的微信接口凭据来获取 JsApi 凭据
+    # 创建一个新的微信接口凭据来请求 JsApi 凭据
 	private function wxGetJsApiTokenUsingNewAccess()
 	{
 		$response = null;
@@ -145,7 +157,7 @@ class JsSdk
 		return $response;
 	}
 
-	// 获取微信接口凭据
+    # 获取微信接口凭据
 	private function getAccessToken()
 	{
 		$access_token = null;
@@ -171,7 +183,7 @@ class JsSdk
 		return $access_token;
 	}
 
-	// 创建一个微信接口凭据
+    # 创建一个微信接口凭据
 	private function createAccessToken()
 	{
 		$access_token = null;
@@ -185,7 +197,7 @@ class JsSdk
 			$access_token = $rsp->access_token;
 
             # 比微信的过期时间提前一些
-			$expiredTime = $now + $rsp->expires_in - PRE_EXPIRED;
+			$expiredTime = $now + $rsp->expires_in;
 
 			$this->setAuthentication(TOKEN_TYPE, $access_token, $expiredTime);
 		}
@@ -193,7 +205,7 @@ class JsSdk
 		return $access_token;
 	}
 
-	// 调用微信接口获取凭据
+    # 调用微信接口获取凭据
 	private function wxGetAccessToken()
 	{
 		$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".APP_ID."&secret=".APP_SECRET;
@@ -203,8 +215,8 @@ class JsSdk
 		return $rsp;
 	}
 
-	// 随机生成一个字符串
-	private function createNonceStr($length = 16)
+    # 创建随机字符串
+    private function createNonceStr($length = 16)
 	{
 		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		$str = "";
@@ -214,8 +226,8 @@ class JsSdk
 		return $str;
 	}
 
-	// 获取微信认证记录，如微信接口凭据， JsApi 凭据和卡券接口凭据等
-	private function getAuthentication($type)
+    # 获取微信认证记录
+    private function getAuthentication($type)
 	{
 		$value = null;
 
@@ -236,7 +248,7 @@ class JsSdk
 		return $value;
 	}
 
-	// 设置微信认证记录
+    # 设置微信认证记录
 	private function setAuthentication($type, $value, $expiredTime)
 	{
 		$con = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
@@ -253,24 +265,23 @@ class JsSdk
 		}
 	}
 
-	// httpGet 微信接口
-	private function httpGet($url)
+    # HttpGet 请求微信接口
+    private function httpGet($url)
 	{
 		$curl = curl_init();
+
+        # 启用Ssl，若验证失败可下载证书：http://curl.haxx.se/ca/cacert.pem
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-
-		// 为保证第三方服务器与微信服务器之间数据传输的安全性，所有微信接口采用https方式调用，必须使用下面2行代码打开ssl安全校验。
-		// 如果在部署过程中代码在此处验证失败，请到 http://curl.haxx.se/ca/cacert.pem 下载新的证书判别文件。
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-
 		curl_setopt($curl, CURLOPT_URL, $url);
 
-		$res = curl_exec($curl);
+		$rsp = curl_exec($curl);
+
 		curl_close($curl);
 
-		return $res;
+		return $rsp;
 	}
 }
 ?>

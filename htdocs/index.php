@@ -5,28 +5,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
     <meta name="format-detection" content="telephone=no" />
+    <meta name="keywords" content="西点金融">
+    <meta name="description" content="西点金融网为广大客户提供更为优质的香港保险产品，香港保险费率更低，保障更全，保额更高，投资回报高。立即预约，即可获得香港保险顾问一对一为您定制的投保计划书。">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="applicable-device" content="mobile">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="keywords" content="西点金融">
-    <meta name="description" content="西点金融网为广大客户提供更为优质的香港保险产品，香港保险费率更低，保障更全，保额更高，投资回报高。立即预约，即可获得香港保险顾问一对一为您定制的投保计划书。">
-    <link rel="shortcut icon" type="image/x-icon" href="http://images.hzins.com/short/hzh5/favicon.ico">
-    <link rel="apple-touch-icon" href="http://images.hzins.com/short/hzh5/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="西点金融网">
-    <link rel="canonical" href="m.hzins.com/product/xianggangbaoxian/" />
-    <link rel="stylesheet" href="css/style.css?v=1.3" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="canonical" href="http://www.westpointfinance.cn" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="index-page">
-    <?php
-    require_once "jssdk.php";
-    $jssdk = new JSSDK;
-    $signPackage = $jssdk->getJsApiSignPackage();
-    if ($signPackage)
-    {
-        echo "<input type='hidden' id='jsApiSignPackage' value='".json_encode($signPackage)."' />";
-    }    
-    ?>
-    <div class="top-banner"></div>
+    <!-- 顶部 -->
+    <div class="pb20">
+        <img src="images/bg-0.jpg" />
+    </div>
+    <!-- 9大优势 -->
     <div class="block01 pb30" id="vpan">
         <h3 class="f23 tc pt40 pb30"><span class="secondary-color">9大优势</span><br>
             香港保险你值得拥有！</h3>
@@ -89,10 +84,11 @@
             </div>
         </div>
     </div>
-
+    <!-- 金额与数量图 -->
     <div class="block02 pb30">
         <h3 class="f23 tc pt40 pb10">内地人赴港买保险<br>
-            数量和金额均<span class="secondary-color">快速增长</span></h3>
+            数量和金额均<span class="secondary-color">快速增长</span>
+        </h3>
         <div>
             <p class="f10 tc  fca">近几年内地客户到香港投保情况统计</p>
             <div class="tc mt15">
@@ -115,6 +111,7 @@
             </div>
         </div>
     </div>
+    <!-- 畅销产品系列 -->
     <div class="block03 bgf0 pb30">
         <h3 class="f23 tc pt40">畅销产品套餐系列</h3>
         <ul class="product-list mt15 pr15 pl15" id="product">
@@ -173,6 +170,7 @@
             </li>
         </ul>
     </div>
+    <!-- 相关流程 -->
     <div class="block04 pr15 pl15 pb30">
         <h3 class="f23 tc pt40 ">相关流程</h3>
         <div class="tc mt15">
@@ -185,21 +183,22 @@
         <div class="tab-container" id="tabs">
             <div class="tab-pane">
                 <p>
-                    <img class="imgmw100" src="images/step1_v1.png" alt="">
+                    <img class="imgmw100" src="images/process-insure.png" alt="">
                 </p>
             </div>
             <div class="tab-pane fn-hide">
                 <p>
-                    <img class="imgmw100" src="images/step2_v1.png" alt="">
+                    <img class="imgmw100" src="images/process-claim.png" alt="">
                 </p>
             </div>
             <div class="tab-pane fn-hide">
                 <p>
-                    <img class="imgmw100" src="images/step3_v1.png" alt="">
+                    <img class="imgmw100" src="images/process-preserves.png" alt="">
                 </p>
             </div>
         </div>
     </div>
+    <!-- 常见问题，风险提示 -->
     <div class="block05 bgf0  pl15 pr15 pb30">
         <h3 class="f23 tc pt40 ">常见问题</h3>
         <div class="tc mt15">
@@ -281,6 +280,7 @@
             </div>
         </div>
     </div>
+    <!-- 预约 -->
     <div class="block06" id="yuyuePanel">
         <h3 class="f23 tc pt40 pb30 fcw">请留下您的联系方式，我们的专属顾问会及时与您联系定制投保建议书</h3>
         <div class="index-form-box pl15 pr15">
@@ -300,7 +300,6 @@
             </div>
             <a href="javascript:;" class="btn btn-block mt10" onclick="submit()"><i class="circle-loader" style="display: none"></i>立即预约</a>
         </div>
-
         <div class="mt20 media-box">
             <div class="media-content">
                 <i class="f14 fcw  mt20 media-title">香港保险专属顾问
@@ -310,30 +309,7 @@
             </div>
         </div>
     </div>
-    <div class="ui-overlay form-overlay" style="display: none" id="shengPan">
-        <div class="ui-layerbox-dialog">
-            <div class="ui-layerbox ui-layerbox-large">
-                <div class="ui-layerbox-head">
-                    <h3 class="ui-layerbox-head-title">免责声明</h3>
-                    <span class="ui-layerbox-head-close ui-icon-layerbox-close closeSu" onclick="$('#shengPan').hide()" title="关闭"></span>
-                </div>
-                <div class="ui-layerbox-container fn-clearfix">
-                    <div class="msg-boxer">
-                        <div class="msg-box msg-box-ok">
-                            <div class="msg-box-content clearfix">
-                                <div class="msg-content">
-                                    <div class="msg-text">
-                                        免责声明：本网站并非有关保险公司的官方网站，有关产品和服务的介绍仅供参考，具体以保险公司官方信息为准。预约后续服务由香港丰润保险经纪公司承担。
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btn btn-block mt10 closeSu" onclick="$('#shengPan').hide()">确认</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- 预约成功 -->
     <div class="ui-overlay form-overlay" style="display: none" id="success">
         <div class="ui-layerbox-dialog">
             <div class="ui-layerbox ui-layerbox-large">
@@ -358,6 +334,7 @@
             </div>
         </div>
     </div>
+    <!-- 预约失败 -->
     <div class="ui-overlay form-overlay" style="display: none" id="fail">
         <div class="ui-layerbox-dialog">
             <div class="ui-layerbox ui-layerbox-large">
@@ -382,20 +359,25 @@
             </div>
         </div>
     </div>
-    <!--<div class="fixed-kf-box"><a href="#" class="kf-item" title="在线客服" id="kefuBtn">在线客服</a></div>-->
-    <a href="javascript:history.back();" class="go-return">返回</a>
+    <!-- 底部浮动条 -->
     <div class="fixed-bottom tr" id="touxiang">
         <div class="pic-item">
-            <img src="images/7-pic.png" alt="">
+            <img src="images/adviser.png" alt="">
         </div>
         <div class="con tr">
             <a href="#product" class="btn f14">查看产品</a>
             <a href="#yuyuePanel" class="btn f14">预约顾问</a>
         </div>
     </div>
+    <!-- scripts -->
     <script src="js/zepto.min.js"></script>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script src="http://www.westpointfinance.cn/js/westpointfinance.js"></script>
-    <script src="http://www.westpointfinance.cn/js/wxshare.js"></script>
+    <script src="js/westpointfinance.js"></script>
+    <?php 
+    if (strpos($_SERVER["HTTP_USER_AGENT"], "MicroMessenger"))
+    {
+        echo "<script src=\"http://res.wx.qq.com/open/js/jweixin-1.0.0.js\"></script>";
+        echo "<script src=\"js/wxshare.js\"></script>";
+    }
+    ?>
 </body>
 </html>
