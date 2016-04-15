@@ -22,7 +22,7 @@
                             'onMenuShareQZone'
                         ]
                     });
-                    ws.ready(function () {
+                    wx.ready(function () {
                         wx.onMenuShareAppMessage({
                             title: sign.title,
                             desc: sign.desc,

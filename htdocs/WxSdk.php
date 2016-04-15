@@ -1,15 +1,13 @@
 <?php
 define("APP_ID", "wxb872ed55fcbd3b5a");
 define("APP_SECRET", "d93c4370ad22e32022b022df48eb1d07");
-define("DB_HOST", "sdm163155163.my3w.com");
-define("DB_USER", "sdm163155163");
+define("DB_HOST", "sdm163501654.my3w.com");
+define("DB_USER", "sdm163501654");
 define("DB_PASSWORD", "Xidian2016");
-define("DB_NAME", "sdm163155163_db");
+define("DB_NAME", "sdm163501654_db");
 define("TOKEN_TYPE", 1);
 define("JSAPI_TYPE", 2);
 define("TIKET_TYPE", 3);
-define("DEBUG", false);
-define("PRE_EXPIRED", 60);
 
 class WxSdk
 {
@@ -177,8 +175,6 @@ class WxSdk
         {
             $access_token = $this->createAccessToken();
         }
-
-        $access_token = $authentication->Value;
 
 		return $access_token;
 	}
