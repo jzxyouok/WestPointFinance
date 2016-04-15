@@ -9,7 +9,7 @@
                 if (rsp && rsp.length > 0) {
                     var sign = JSON.parse(rsp);
                     wx.config({
-                        debug: true,
+                        debug: false,
                         appId: sign.appId,
                         timestamp: sign.timestamp,
                         nonceStr: sign.nonceStr,
